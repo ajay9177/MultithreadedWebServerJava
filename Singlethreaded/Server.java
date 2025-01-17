@@ -1,4 +1,5 @@
-package SingleThreaded;
+package Singlethreaded;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,15 +23,16 @@ public class Server {
                 System.out.println("Connection accepted from client " + acceptedConnection.getRemoteSocketAddress()); // LOG CLIENT ADDRESS
 
                 // INITIALIZE OUTPUT STREAM TO SEND DATA TO THE CLIENT
-                PrintWriter toClient = new PrintWriter(acceptedConnection.getOutputStream(), true);
+                PrintWriter toClient = new PrintWriter(acceptedConnection.getOutputStream());
 
                 // INITIALIZE INPUT STREAM TO RECEIVE DATA FROM THE CLIENT
                 BufferedReader fromClient = new BufferedReader(new InputStreamReader(acceptedConnection.getInputStream()));
 
                 // SEND A GREETING MESSAGE TO THE CLIENT
                 toClient.println("Hello from the server");
+                toClient.close();
                 fromClient.close();
-                socket.close();
+                acceptedConnection.close();
             } catch (IOException ex) {
                 ex.printStackTrace(); // PRINT EXCEPTION STACK TRACE IF AN ERROR OCCURS
             }
